@@ -1,0 +1,13 @@
+/* Styles go here */
+
+.resize {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+  width: 300px;
+  height: auto;
+}
+#wrapper {
+    width: 500px;
+    border: 1px solid black;
+}
