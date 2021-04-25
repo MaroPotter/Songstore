@@ -1,13 +1,135 @@
 /* Styles go here */
 
-.resize {
-  position: absolute;
-  top: 8px;
-  left: 16px;
-  width: 300px;
-  height: auto;
-}
-#wrapper {
+.logo {
+     position: relative;
+     top: 0px;
+     left: 0px;
+     width: 200px;
+     height: auto;
+     padding: 15px;
+ }
+.title {
+    position: relative;
+    top: 0px;
+    left: -50px;
     width: 500px;
-    border: 1px solid black;
+    height: auto;
+    padding: 15px;
 }
+.navbarr {
+    position: relative;
+    left: 0px;
+    top: 0px;
+}
+.user {
+    position: relative;
+    left: -10px;
+    top: -80px;
+    color: white;
+    background-color: #0061ff;
+}
+.add-song-wrapper {
+    width: 500px;
+    height: auto;
+    position: relative;
+    left: 300px;
+    top: 0px;
+}
+.buy-song-wrapper {
+    width: 100%;
+    height: auto;
+    position: relative;
+    left: 0px;
+    top: 0px;
+}
+
+.smaller-col{
+    width: 9%;
+}
+.owner{
+    word-break: break-all;
+}
+
+.button {
+    text-align: center;
+    display: inline-block;
+    font-size: 20px;
+    font-family: "Comic Sans MS";
+    color: white;
+    margin: 0px;
+    cursor: pointer;
+    background-color: #0061ff;
+    height: 100px;
+    width: 100%;
+}
+
+
+
+
+body {
+    background: white;
+    font-family: "Comic Sans MS";
+}
+
+table {
+    width: 100%;
+    background: #0061ff;
+    border-radius: 0.25em;
+    border-collapse: collapse;
+    margin: 1em;
+    border-width: 5px;
+}
+
+th {
+    border: 5px solid rgba(61, 79, 169, 0.97);
+    color: #f4ff8b;
+    font-size: 0.85em;
+    font-weight: 600;
+    padding: 0.5em 1em;
+    text-align: center;
+    vertical-align: center;
+}
+
+td {
+    color: #f4ff8b;
+    border: 5px solid rgba(61, 79, 169, 0.97);
+    font-weight: 400;
+    padding: 0.65em 1em;
+    text-align: center;
+}
+select{
+    background: #3f78e2;
+    color: #f4ff8b;
+    font-family: Algerian;
+    height: 30px;
+    width: 200px;
+
+}
+input {
+    display: block;
+    background-color: #895024;
+    color: #E2B842;
+    font-family: "Comic Sans MS";
+    margin: 5px 15px;
+}
+
+label {
+    color: #0061ff;
+    font-family: "Comic Sans MS";
+    margin: 5px 15px;
+
+}
+
+h1 {
+    font-family: Algerian;
+    color: black;
+    font-size: 72px;
+    margin: 10px;
+    text-align: center;
+}
+.h1h1 {
+    color: #0061ff;
+}
+
+
+

@@ -1,25 +1,28 @@
 import React, { Component } from 'react';
-import logo from '../logo2.png';
+import logo from '../logo.png';
+import title from '../title2.png';
 import './App.css';
 
 class Navbar extends Component {
 
   render() {
     return (
-      <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+      <nav className="navbar navbar-dark fixed-top bg-dark p-0 shadow navbarr">
+          <a>
+              <img src={logo} className="logo" alt="Songstore's logo"/>
+          </a>
         <a
           className="navbar-brand col-sm-3 col-md-2 mr-0"
           href="http://www.dappuniversity.com/bootcamp"
           target="_blank"
           rel="noopener noreferrer"
         >
-            Marek Matys' Songstore
+        <img src={title} className="title" alt="Songstore's title"/>
         </a>
-        <ul className="navbar-nav px-3">
-          <li className="nav-item text-nowrap d-none d-sm-none d-sm-block">
-            <small className="text-white"><span id="account">{this.props.account}</span></small>
-          </li>
-        </ul>
+
+
+            <button className="user"><span id="account">User: {this.props.account}</span></button>
+
 
       </nav>
     );

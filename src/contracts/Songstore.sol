@@ -1,13 +1,15 @@
 pragma solidity ^0.5.0;
 
 contract Songstore {
-	string public name;
-	uint public productCount = 0;
-	mapping(uint => Product) public products;
+	string public applicationTitle;
+	uint public allSongsCounter = 0;
+	mapping(uint => Song) public songs;
 
-	struct Product {
+	struct Song {
 		uint id;
-		string name;
+		string title;
+		string artist;
+		string genre;
 		uint priceDigitalDownload;
 		uint priceCoverVersion;
 		uint priceRegularLicense;
@@ -16,9 +18,9 @@ contract Songstore {
 		bool purchased;
 	}
 
-	event ProductCreated(
+	event SongCreated(
 			uint id,
-			string name,
+			string title,
 			uint priceDigitalDownload,
 			uint priceCoverVersion,
 			uint priceRegularLicense,
@@ -27,67 +29,66 @@ contract Songstore {
 			bool purchased
 		); 
 
-	event ProductPurchased(
+	event SongPurchased(
 			uint id,
-			string name,
-			uint priceDigitalDownload,
-			uint priceCoverVersion,
-			uint priceRegularLicense,
-			uint priceExtendedLicense,
+			string title,
+			uint value,
 			address payable owner,
 			bool purchased
 		); 
 
 	constructor() public {
-		name = "Marek's songstore";
+		applicationTitle = "Marek's songstore";
 	}
 
-	function createProduct(string memory _name, uint _priceDigitalDownload, uint _priceCoverVersion, uint _priceRegularLicense, uint _priceExtendedLicense) public {
+	function createSong(string memory _title, string memory _artist, string memory _genre, uint _priceDigitalDownload,
+		uint _priceCoverVersion, uint _priceRegularLicense, uint _priceExtendedLicense) public {
 		//Make sure parameters are correct
-		//Require a valid name
-		require(bytes(_name).length > 0);
+		//Require a valid title and artist
+		require(bytes(_title).length > 0);
+		require(bytes(_artist).length > 0);
+		require(bytes(_genre).length > 0);
+
 		//Require a valid price
 		require(_priceDigitalDownload > 0);
 		require(_priceCoverVersion > 0);
 		require(_priceRegularLicense > 0);
 		require(_priceExtendedLicense > 0);
-		//Increment productCont
-		productCount ++;
-		//Create the product
-		products[productCount] = Product(productCount, _name, _priceDigitalDownload, _priceCoverVersion, _priceRegularLicense, _priceExtendedLicense, msg.sender, false);
+		//Increment allSongsCounter
+		allSongsCounter ++;
+		//Create the song
+		songs[allSongsCounter] = Song(allSongsCounter, _title, _artist, _genre, _priceDigitalDownload, _priceCoverVersion, _priceRegularLicense, _priceExtendedLicense, msg.sender, false);
 		// Trigger an event
-		emit ProductCreated(productCount, _name, _priceDigitalDownload,  _priceCoverVersion, _priceRegularLicense, _priceExtendedLicense, msg.sender, false);
+		emit SongCreated(allSongsCounter, _title, _priceDigitalDownload,  _priceCoverVersion, _priceRegularLicense, _priceExtendedLicense, msg.sender, false);
 
 	}
 
-	function purchaseProduct(uint _id) public payable {
-		//Fetch the product
-		Product memory _product = products[_id];
+	function purchaseSong(uint _id) public payable {
+		//Fetch the song
+		Song memory _song = songs[_id];
 
 		//Fetch the owner
-		address payable _seller = _product.owner;
-		//Make sure the product is valid - has a valid id)
+		address payable _seller = _song.owner;
+		//Make sure the song is valid - has a valid id)
 
-		require (_product.id > 0 && _product.id <= productCount);
-		//Require that there's enough Ether in the transaction
-		// require (msg.value >= _mySelectedValue);
-		//Require that the product has not been purchased already
-		require(!_product.purchased);
+		require (_song.id > 0 && _song.id <= allSongsCounter);
+		//Require that the song has not been purchased already
+		//require(!_song.purchased);
 		//Require that the buyer is not the seller
 		require(_seller != msg.sender);
 		
 		
 
 		//Purchase it - transfer the ownership to the buyer
-		_product.owner = msg.sender;
+		_song.owner = msg.sender;
 		//Mark as purchased
-		_product.purchased = true;
-		//Update the product
-		products[_id] = _product; 
+		_song.purchased = true;
+		//Update the song
+		songs[_id] = _song;
 		//Pay the seller by sending them Ether
 		address(_seller).transfer(msg.value);
 		//Trigger an event
-		emit ProductPurchased(productCount, _product.name, _product.priceDigitalDownload, _product.priceCoverVersion, _product.priceRegularLicense, _product.priceExtendedLicense, msg.sender, true);
+		emit SongPurchased(allSongsCounter, _song.title, msg.value, msg.sender, true);
 
 	}
 	
