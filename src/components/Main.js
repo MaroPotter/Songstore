@@ -6,13 +6,6 @@ class Main extends Component {
 
     render() {
 
- // const optionsPrice = [
- //    {value: 'digital', label: 'Digital Download'},
- //    {value: 'digital', label: 'Cover Version'},
- //    {value: 'digital', label: 'Regular License'},
- //    {value: 'digital', label: 'Extended License'}
- //  ]; 
-
     return (
       <div id="content">
       <div className="add-song-wrapper">
@@ -22,10 +15,10 @@ class Main extends Component {
           const title = this.songTitle.value
           const artist = this.songArtist.value
           const genre = this.songGenre.value
-          const priceDigitalDownload = window.web3.utils.toWei(this.priceDigitalDownload.value.toString(), 'Ether')
-          const priceCoverVersion = window.web3.utils.toWei(this.priceCoverVersion.value.toString(), 'Ether')
-          const priceRegularLicense = window.web3.utils.toWei(this.priceRegularLicense.value.toString(), 'Ether')
-          const priceExtendedLicense= window.web3.utils.toWei(this.priceExtendedLicense.value.toString(), 'Ether')
+          const priceDigitalDownload = window.web3.utils.toWei(this.priceDigitalDownload.value.toString(), 'milliether')
+          const priceCoverVersion = window.web3.utils.toWei(this.priceCoverVersion.value.toString(), 'milliether')
+          const priceRegularLicense = window.web3.utils.toWei(this.priceRegularLicense.value.toString(), 'milliether')
+          const priceExtendedLicense= window.web3.utils.toWei(this.priceExtendedLicense.value.toString(), 'milliether')
 
           this.props.createSong(title, artist, genre, priceDigitalDownload, priceCoverVersion, priceRegularLicense, priceExtendedLicense)
         }}>
@@ -53,7 +46,7 @@ class Main extends Component {
                 type="text"
                 ref={(input) => { this.songGenre = input }}
                 className="form-control"
-                placeholder="Genre which it belongs to"
+                placeholder="Genre to which it belongs"
                 required />
           </div>
           <div className="form-group mr-sm-2">
@@ -62,7 +55,7 @@ class Main extends Component {
               type="text"
               ref={(input) => { this.priceDigitalDownload = input }}
               className="form-control"
-              placeholder="Price for Digital Download license"
+              placeholder="Price for Digital Download license (in milliethers)"
               required />
           </div>
           <div className="form-group mr-sm-2">
@@ -71,7 +64,7 @@ class Main extends Component {
               type="text"
               ref={(input) => { this.priceCoverVersion = input }}
               className="form-control"
-              placeholder="Price for Cover Version license"
+              placeholder="Price for Cover Version license (in milliethers)"
               required />
            </div>
           <div className="form-group mr-sm-2">
@@ -80,7 +73,7 @@ class Main extends Component {
               type="text"
               ref={(input) => { this.priceRegularLicense = input }}
               className="form-control"
-              placeholder="Price for Regular License"
+              placeholder="Price for Regular License (in milliethers)"
               required />
            </div>
           <div className="form-group mr-sm-2">
@@ -89,7 +82,7 @@ class Main extends Component {
               type="text"
               ref={(input) => { this.priceExtendedLicense = input }}
               className="form-control"
-              placeholder="Price for Extended License"
+              placeholder="Price for Extended License (in milliethers)"
               required />
           </div>
           <button type="submit" className="btn btn-primary button" >Add Song</button>
@@ -99,19 +92,19 @@ class Main extends Component {
         <p>&nbsp;</p>
       <div className="buy-song-wrapper">
         <h1 className="h1h1">Buy Song</h1>
-        <table>
+        <table className="content-table">
           <thead>
             <tr>
               <th scope="col" >#</th>
               <th scope="col">Title</th>
               <th scope="col">Artist</th>
               <th scope="col">Genre</th>
-              <th scope="col" className="smaller-col">Price for Digital Download</th>
-              <th scope="col" className="smaller-col">Price for Cover Version</th>
-              <th scope="col" className="smaller-col">Price for Regular License</th>
-              <th scope="col" className="smaller-col">Price for Extended License</th>
+              <th scope="col" className="smaller-col">Digital Download (mETH)</th>
+              <th scope="col" className="smaller-col">Cover Version (mETH)</th>
+              <th scope="col" className="smaller-col">Regular License (mETH)</th>
+              <th scope="col" className="smaller-col">Extended License (mETH)</th>
               <th scope="col">Owner</th>
-              <th scope="col">Selection</th>
+              <th scope="col" className="medium-col">Selection of license</th>
             </tr>
           </thead>
           <tbody id="songList">
@@ -122,13 +115,18 @@ class Main extends Component {
                   <td>{song.title}</td>
                   <td>{song.artist}</td>
                   <td>{song.genre}</td>
-                  <td className="smaller-col">{window.web3.utils.fromWei(song.priceDigitalDownload.toString(), 'Ether')} Eth</td>
-                  <td className="smaller-col">{window.web3.utils.fromWei(song.priceCoverVersion.toString(), 'Ether')} Eth</td>
-                  <td className="smaller-col">{window.web3.utils.fromWei(song.priceRegularLicense.toString(), 'Ether')} Eth</td>
-                  <td className="smaller-col">{window.web3.utils.fromWei(song.priceExtendedLicense.toString(), 'Ether')} Eth</td>
+                  <td className="smaller-col">{parseFloat(window.web3.utils.fromWei(song.priceDigitalDownload.toString(),
+                      'milliether')).toFixed(2)}</td>
+                  <td className="smaller-col">{parseFloat(window.web3.utils.fromWei(song.priceCoverVersion.toString(),
+                      'milliether')).toFixed(2)}</td>
+                  <td className="smaller-col">{parseFloat(window.web3.utils.fromWei(song.priceRegularLicense.toString(),
+                      'milliether')).toFixed(2)}</td>
+                  <td className="smaller-col">{parseFloat(window.web3.utils.fromWei(song.priceExtendedLicense.toString(),
+                      'milliether')).toFixed(2)}</td>
                   <td className="owner">{song.owner}</td>
 
-                  <td><select onChange={(event) => this.props.onSelectChange(event.target.value, song)} value={song.selectedValue}>
+                  <td><select onChange={(event) => this.props.onSelectChange(event.target.value, song)}
+                              value={song.selectedValue}>
 
                         <option value="priceDigitalDownload">Digital Download</option>
                         <option value="priceCoverVersion">Cover Version</option>
@@ -137,17 +135,17 @@ class Main extends Component {
 
                       </select>
 
- 
-                    { !(song.owner === this.props.account)
-                      ? <button name={song.id} className="button btn btn-primary"
 
-                          onClick={(event) => {
-                            this.props.purchaseSong(song.id)
-                          }}
+                    { (song.owner === this.props.account)
+                      ? null
+                      : <button name={song.id} className="button-2 btn btn-primary"
+
+                                onClick={(event) => {
+                                  this.props.purchaseSong(song.id)
+                                }}
                         >
                           Buy
                         </button>
-                      : null
                     }
                   </td>
                 </tr>

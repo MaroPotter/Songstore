@@ -15,7 +15,6 @@ contract Songstore {
 		uint priceRegularLicense;
 		uint priceExtendedLicense;
 		address payable owner;
-		bool purchased;
 	}
 
 	event SongCreated(
@@ -26,15 +25,14 @@ contract Songstore {
 			uint priceRegularLicense,
 			uint priceExtendedLicense,
 			address payable owner,
-			bool purchased
 		); 
 
 	event SongPurchased(
 			uint id,
 			string title,
+			string artist,
 			uint value,
 			address payable owner,
-			bool purchased
 		); 
 
 	constructor() public {
@@ -57,9 +55,9 @@ contract Songstore {
 		//Increment allSongsCounter
 		allSongsCounter ++;
 		//Create the song
-		songs[allSongsCounter] = Song(allSongsCounter, _title, _artist, _genre, _priceDigitalDownload, _priceCoverVersion, _priceRegularLicense, _priceExtendedLicense, msg.sender, false);
+		songs[allSongsCounter] = Song(allSongsCounter, _title, _artist, _genre, _priceDigitalDownload, _priceCoverVersion, _priceRegularLicense, _priceExtendedLicense, msg.sender);
 		// Trigger an event
-		emit SongCreated(allSongsCounter, _title, _priceDigitalDownload,  _priceCoverVersion, _priceRegularLicense, _priceExtendedLicense, msg.sender, false);
+		emit SongCreated(allSongsCounter, _title, _priceDigitalDownload,  _priceCoverVersion, _priceRegularLicense, _priceExtendedLicense, msg.sender);
 
 	}
 
@@ -79,16 +77,13 @@ contract Songstore {
 		
 		
 
-		//Purchase it - transfer the ownership to the buyer
-		_song.owner = msg.sender;
-		//Mark as purchased
-		_song.purchased = true;
+		//Purchase it
 		//Update the song
 		songs[_id] = _song;
 		//Pay the seller by sending them Ether
 		address(_seller).transfer(msg.value);
 		//Trigger an event
-		emit SongPurchased(allSongsCounter, _song.title, msg.value, msg.sender, true);
+		emit SongPurchased(allSongsCounter, _song.title, _song.artist, msg.value, msg.sender);
 
 	}
 	
