@@ -41,7 +41,7 @@ class App extends Component {
             for (var i = 1; i <= allSongsCounter; i++) {
                 const song = await songstore.methods.songs(i).call()
                 this.setState({
-                    songs: [...this.state.songs, {...song, selectedValue: "priceDigitalDownload"}]
+                    songs: [...this.state.songs, {...song, selectedValue: "priceDownloadLicense"}]
                 })
             }
             this.setState({loading: false})
@@ -63,9 +63,9 @@ class App extends Component {
         this.createSong = this.createSong.bind(this)
     }
 
-    createSong(title, artist, genre, priceDigitalDownload, priceCoverVersion, priceRegularLicense, priceExtendedLicense) {
+    createSong(title, artist, genre, priceDownloadLicense, priceCoverLicense, priceRegularLicense, priceExtendedLicense) {
         this.setState({loading: true})
-        this.state.songstore.methods.createSong(title, artist, genre, priceDigitalDownload, priceCoverVersion,
+        this.state.songstore.methods.createSong(title, artist, genre, priceDownloadLicense, priceCoverLicense,
             priceRegularLicense, priceExtendedLicense).send({from: this.state.account})
             .once('receipt', (receipt) => {
                 this.setState({loading: false})
@@ -75,8 +75,9 @@ class App extends Component {
     purchaseSong = (id) => {
         this.setState({loading: true})
         const row = this.state.songs.find((x) => x.id === id);
+        console.log(typeof row[row.selectedValue]);
         const mySelectedValue = row[row.selectedValue];
-        console.log(mySelectedValue)
+        console.log(typeof mySelectedValue)
         this.state.songstore.methods.purchaseSong(id).send({from: this.state.account, value: mySelectedValue})
             .once('receipt', (receipt) => {
                 this.setState({loading: false})

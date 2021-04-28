@@ -1,7 +1,6 @@
 pragma solidity ^0.5.0;
 
 contract Songstore {
-	string public applicationTitle;
 	uint public allSongsCounter = 0;
 	mapping(uint => Song) public songs;
 
@@ -10,8 +9,8 @@ contract Songstore {
 		string title;
 		string artist;
 		string genre;
-		uint priceDigitalDownload;
-		uint priceCoverVersion;
+		uint priceDownloadLicense;
+		uint priceCoverLicense;
 		uint priceRegularLicense;
 		uint priceExtendedLicense;
 		address payable owner;
@@ -20,11 +19,13 @@ contract Songstore {
 	event SongCreated(
 			uint id,
 			string title,
-			uint priceDigitalDownload,
-			uint priceCoverVersion,
+			string artist,
+			string genre,
+			uint priceDownloadLicense,
+			uint priceCoverLicense,
 			uint priceRegularLicense,
 			uint priceExtendedLicense,
-			address payable owner,
+			address payable owner
 		); 
 
 	event SongPurchased(
@@ -32,15 +33,12 @@ contract Songstore {
 			string title,
 			string artist,
 			uint value,
-			address payable owner,
+			address payable owner
 		); 
 
-	constructor() public {
-		applicationTitle = "Marek's songstore";
-	}
 
-	function createSong(string memory _title, string memory _artist, string memory _genre, uint _priceDigitalDownload,
-		uint _priceCoverVersion, uint _priceRegularLicense, uint _priceExtendedLicense) public {
+	function createSong(string memory _title, string memory _artist, string memory _genre, uint _priceDownloadLicense,
+		uint _priceCoverLicense, uint _priceRegularLicense, uint _priceExtendedLicense) public {
 		//Make sure parameters are correct
 		//Require a valid title and artist
 		require(bytes(_title).length > 0);
@@ -48,16 +46,16 @@ contract Songstore {
 		require(bytes(_genre).length > 0);
 
 		//Require a valid price
-		require(_priceDigitalDownload > 0);
-		require(_priceCoverVersion > 0);
+		require(_priceDownloadLicense > 0);
+		require(_priceCoverLicense > 0);
 		require(_priceRegularLicense > 0);
 		require(_priceExtendedLicense > 0);
 		//Increment allSongsCounter
 		allSongsCounter ++;
 		//Create the song
-		songs[allSongsCounter] = Song(allSongsCounter, _title, _artist, _genre, _priceDigitalDownload, _priceCoverVersion, _priceRegularLicense, _priceExtendedLicense, msg.sender);
+		songs[allSongsCounter] = Song(allSongsCounter, _title, _artist, _genre, _priceDownloadLicense, _priceCoverLicense, _priceRegularLicense, _priceExtendedLicense, msg.sender);
 		// Trigger an event
-		emit SongCreated(allSongsCounter, _title, _priceDigitalDownload,  _priceCoverVersion, _priceRegularLicense, _priceExtendedLicense, msg.sender);
+		emit SongCreated(allSongsCounter, _title, _artist, _genre, _priceDownloadLicense,  _priceCoverLicense, _priceRegularLicense, _priceExtendedLicense, msg.sender);
 
 	}
 
@@ -83,7 +81,7 @@ contract Songstore {
 		//Pay the seller by sending them Ether
 		address(_seller).transfer(msg.value);
 		//Trigger an event
-		emit SongPurchased(allSongsCounter, _song.title, _song.artist, msg.value, msg.sender);
+		emit SongPurchased(_id, _song.title, _song.artist, msg.value, msg.sender);
 
 	}
 	
