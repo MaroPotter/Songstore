@@ -77,7 +77,7 @@ contract Songstore {
 
 		//Purchase it
 		//Update the song
-		songs[_id] = _song;
+		//songs[_id] = _song;
 		//Pay the seller by sending them Ether
 		address(_seller).transfer(msg.value);
 		//Trigger an event

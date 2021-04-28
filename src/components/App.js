@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import Web3 from 'web3';
-import './App.css';
+import './Main.css';
 import Songstore from '../abis/Songstore.json'
-import Navbar from './Navbar'
-import Main from './Main'
+import NavigationBar from './NavigationBar'
+import View from './View'
 
 
 class App extends Component {
@@ -95,14 +95,14 @@ class App extends Component {
     render() {
         return (
             <div>
-                <Navbar account={this.state.account}/>
+                <NavigationBar account={this.state.account}/>
                 <div className="container-fluid mt-5">
                     <div className="row">
                         <main role="main" className="col-lg-12 d-flex">
                             {this.state.loading
                                 ?
                                 <div id="loader" className="text-center"><p className="text-center">Loading...</p></div>
-                                : <Main
+                                : <View
                                     songs={this.state.songs}
                                     account={this.state.account}
                                     createSong={this.createSong}

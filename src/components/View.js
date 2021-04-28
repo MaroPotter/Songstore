@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import generatePDF from "./generatePDF";
 
 
-class Main extends Component {
+class View extends Component {
 
   render() {
     return (
@@ -167,4 +167,4 @@ class Main extends Component {
 
 }
 
-export default Main;
+export default View;

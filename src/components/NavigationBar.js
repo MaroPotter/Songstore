@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import logo from '../logo.png';
 import title from '../title2.png';
-import './App.css';
+import './Main.css';
 
-class Navbar extends Component {
+class NavigationBar extends Component {
 
   render() {
     return (
@@ -29,4 +29,4 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar;
+export default NavigationBar;
