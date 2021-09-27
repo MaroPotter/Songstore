@@ -39,19 +39,19 @@ contract Songstore {
 
 	function createSong(string memory _title, string memory _artist, string memory _genre, uint _priceDownloadLicense,
 		uint _priceCoverLicense, uint _priceRegularLicense, uint _priceExtendedLicense) public {
-		//Make sure parameters are correct
 		//Require a valid title and artist
 		require(bytes(_title).length > 0);
 		require(bytes(_artist).length > 0);
 		require(bytes(_genre).length > 0);
-
 		//Require a valid price
 		require(_priceDownloadLicense > 0);
 		require(_priceCoverLicense > 0);
 		require(_priceRegularLicense > 0);
 		require(_priceExtendedLicense > 0);
+
 		//Increment allSongsCounter
 		allSongsCounter ++;
+
 		//Create the song
 		songs[allSongsCounter] = Song(allSongsCounter, _title, _artist, _genre, _priceDownloadLicense, _priceCoverLicense, _priceRegularLicense, _priceExtendedLicense, msg.sender);
 		// Trigger an event
@@ -62,24 +62,17 @@ contract Songstore {
 	function purchaseSong(uint _id) public payable {
 		//Fetch the song
 		Song memory _song = songs[_id];
-
 		//Fetch the owner
 		address payable _seller = _song.owner;
-		//Make sure the song is valid - has a valid id)
 
+		//Make sure the song is valid - has a valid id)
 		require (_song.id > 0 && _song.id <= allSongsCounter);
-		//Require that the song has not been purchased already
-		//require(!_song.purchased);
 		//Require that the buyer is not the seller
 		require(_seller != msg.sender);
-		
-		
 
-		//Purchase it
-		//Update the song
-		//songs[_id] = _song;
 		//Pay the seller by sending them Ether
 		address(_seller).transfer(msg.value);
+
 		//Trigger an event
 		emit SongPurchased(_id, _song.title, _song.artist, msg.value, msg.sender);
 

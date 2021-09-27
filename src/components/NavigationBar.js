@@ -13,8 +13,8 @@ class NavigationBar extends Component {
           </a>
         <a
           className="navbar-brand col-sm-3 col-md-2 mr-0"
-          href="http://www.dappuniversity.com/bootcamp"
-          target="_blank"
+          href="#songList"
+          target="_self"
           rel="noopener noreferrer"
         >
         <img src={title} className="title" alt="Songstore's title"/>

@@ -38,7 +38,7 @@ class App extends Component {
             const allSongsCounter = await songstore.methods.allSongsCounter().call()
             this.setState({allSongsCounter: allSongsCounter})
             // Load songs
-            for (var i = 1; i <= allSongsCounter; i++) {
+            for (let i = 1; i <= allSongsCounter; i++) {
                 const song = await songstore.methods.songs(i).call()
                 this.setState({
                     songs: [...this.state.songs, {...song, selectedValue: "priceDownloadLicense"}]
